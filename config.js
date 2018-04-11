@@ -13,7 +13,7 @@ module.exports = {
   'acme-dns-retry-delay-ms': 2000,
   'acme-account-file': process.env.ACME_ACCOUNT_FILE || 'registration.json',
   'acme-account-email': process.env.ACME_ACCOUNT_EMAIL || 'hardcoded@email.org',
-  'acme-account-key-bits': 2048,
+  'acme-account-key-bits': 4096,
   'acme-directory-url': process.env.USE_PRODUCTION ? 'https://acme-v01.api.letsencrypt.org' : 'https://acme-staging.api.letsencrypt.org',
   region: process.env.AWS_REGION || 'eu-west-1',
 };
