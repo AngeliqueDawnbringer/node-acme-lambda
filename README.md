@@ -1,5 +1,5 @@
 # node-acme-lambda
-Use AWS Lambda to manage certificates for Let's Encrypt. This fork supports lambda 6.10 only and relies on babel to leverage ES6 features.
+Use AWS Lambda to manage certificates for Let's Encrypt. This fork supports lambda 6.10 only and relies on babel to leverage ES6 features. I use this code outside AWS and some other cloud providers as well, which do not support all CommonJS syntax or full EcmaScript 2015 for that matter. It was adapted to support my particular use-cases. The code is AS-IS.
 
 # Serverless deployment
 
@@ -17,9 +17,10 @@ All credit goes to Larry Anderson.
 - Error denied: S3 bucket permissions are wrong
 - Too many requests: You have hit the rate limiter, just wait for it. It will auto-recover in time
 - Too many requests: Too many domains? Let's encrypt has a rate limit of a specific amount of requests per minute. This lambda has no concurrency check build in (yet?).
+- No such account: Did you switch from USE_PRODUCTION false to true? Rename registration.json
 
 # Need to run manually?
 - Go to the lambda console, create an empty test and run it. 
 
 # Current version
-This version only supports ACMEv1 not ACMEv2. 
+This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
