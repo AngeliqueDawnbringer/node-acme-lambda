@@ -29,7 +29,6 @@ provider:
       Action:
       - s3:ListBucket
       Resource:
-      # arn:aws:s3:::certificate-api-ccp-settings
       - arn:aws:s3:::${self:provider.environment.S3_CERTIFICATE_BUCKET}
       - arn:aws:s3:::${self:provider.environment.S3_ACCOUNT_BUCKET}
     - Effect: Allow
