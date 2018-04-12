@@ -18,10 +18,10 @@ provider:
   versionFunctions: true
   environment:
     RENEW_BEFORE_EXPIRY: 45
-    S3_ACCOUNT_BUCKET: some-settings-bucket
-    S3_CERTIFICATE_BUCKET: some-bucket
+    S3_ACCOUNT_BUCKET: certificate-api-ccp-settings
+    S3_CERTIFICATE_BUCKET: certificate-api-ccp
     S3_CERTIFICATE_FOLDER: ${self:provider.stage}/store
-    ACME_ACCOUNT_EMAIL: someone@email.org
+    ACME_ACCOUNT_EMAIL: angelique.dawnbringer@scania.com
     USE_PRODUCTION: false
 
   iamRoleStatements:
@@ -29,6 +29,7 @@ provider:
       Action:
       - s3:ListBucket
       Resource:
+      # arn:aws:s3:::certificate-api-ccp-settings
       - arn:aws:s3:::${self:provider.environment.S3_CERTIFICATE_BUCKET}
       - arn:aws:s3:::${self:provider.environment.S3_ACCOUNT_BUCKET}
     - Effect: Allow
@@ -84,3 +85,12 @@ functions:
     reservedConcurrency: 1
     events:
       - schedule: rate(2 hours)
+
+  pem:
+    handler: pem-creator.main
+    name: ${self:provider.stage}-pem-creator
+    description: Certificate Orchestrator ACMEv1 - Pem Addon
+    runtime: nodejs6.10
+    memorySize: 1024
+    timeout: 300
+    reservedConcurrency: 1
