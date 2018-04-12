@@ -22,5 +22,10 @@ All credit goes to Larry Anderson.
 # Need to run manually?
 - Go to the lambda console, create an empty test and run it. 
 
+# Need PEM ?
+- Go to the lambda console, go to pem add-on, create an empty test and run it.
+- You can also add an event that doest his for you. Normally I have a similar function on the s3 bucket which takes event handling.
+
+
 # Current version
 This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
