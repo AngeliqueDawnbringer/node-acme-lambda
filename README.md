@@ -24,7 +24,7 @@ All credit goes to Larry Anderson.
 
 # Need PEM ?
 - Go to the lambda console, go to pem add-on, create an empty test and run it.
-- You can also add an event that doest his for you. Normally I have a similar function on the s3 bucket which takes event handling.
+- You can also add an event that does this for you. Normally I have a similar function on the s3 bucket which takes event handling.
 
 
 # Current version
