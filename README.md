@@ -72,7 +72,7 @@ The rights that would enable it look something like this:
       Resource:
       - arn:aws:s3:::${self:provider.environment.S3_CERTIFICATE_BUCKET}/some-underlying-folder/some-cert-name/*
 ```
-This will allow you to only download the pem files of that specific cert and NOTHING else! You can't delete them, you can't modify them. You an only download them. Easy right! Oh, and you don't need to store credentials on the server either! It is all there when using InstanceRoles (or task-roles etc, or lambda-execution-roles. All the same thing, just different underlying systems)
+This will allow you to only download the pem files of that specific cert and NOTHING else! You can't delete them, you can't modify them. You can only download them. Easy right! Oh, and you don't need to store credentials on the server either! It is all there when using InstanceRoles (or task-roles etc, or lambda-execution-roles. All the same thing, just different underlying systems)
 
 # Current version
 This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
