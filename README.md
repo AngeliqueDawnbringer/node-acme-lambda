@@ -36,13 +36,10 @@ No in fact it is one of the most safe storing solutions out there, when used cor
 
 When using AWS IAM roles an policies correctly, you can give access to resources and files - applying least-privilege - on an extremely granular level. You can even enable payload-encryption without giving out credentials using AWS KMS to protect access to the private key even further. All you need is access defined in the policy to the relevant AWS KMS key, and the rest is taken care of. You do not need any information regarding the key when trying to decrypt it. You or the role, simply needs rights to decrypt the contents of the encrypted payload.
 
-# Current version
-This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
-
-# But how does it work?
+- But how does it work?
 Well, it creates an account at the api (note: account PERRRR api! muy importante!), creates request handshake pattern following DNS-01 specification and posts all of this in a nice little json and stores it to your bucket. And then you have some options. Unfortunately the current nodejs SDK does not support IAM-server-certificate upload... And ACM-certificates, does not allow you to upload multiple certificates at a time, so you are limited with a couple of things.
 
-- 1: Upload it yourself, by downloading the four files and run:
+ - 1: Upload it yourself, by downloading the four files and run:
 
 ```
 aws iam upload-server-certificate \
@@ -56,7 +53,23 @@ aws iam upload-server-certificate \
 
 Or add larrys Scala S3 trigger to your bucket and make it listen to .json
 
-- 2: Upload it to ACM, one certificate at a time in a for loop instead of using a promise.all (guess what v1.1 contains...) Or just create a ACM certificate using DNS01 for the hostname in question, when you want to have it integrated with Amazon Resources or what not.
+ - 2: Upload it to ACM, one certificate at a time in a for loop instead of using a promise.all (guess what v1.1 contains...) Or just create a ACM certificate using DNS01 for the hostname in question, when you want to have it integrated with Amazon Resources or what not.
+ 
+- But how do I use it in my machine then?
+Well, if you use cloudformation, you can simply pull it down from S3 in cfn-init, or use the AWS-CLI package to download it (when using AWS IAM instance-roles giving your machine explicit access to the specific folder containing all the files)
+
+The rights that would enable it look something like this:
+```
+    - Effect: Allow
+      Action:
+      - s3:GetObject
+      Resource:
+      - arn:aws:s3:::${self:provider.environment.S3_CERTIFICATE_BUCKET}/some-underlying-folder/some-cert-name/*
+```
+This will allow you to only download the pem files of that specific cert and NOTHING else! You can't delete them, you can't modify them. You an only download them. Easy right! Oh, and you don't need to store credentials on the server either! It is all there when using InstanceRoles (or task-roles etc, or lambda-execution-roles. All the same thing, just different underlying systems)
+
+# Current version
+This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
 
 # Security concerns
 - The private key is not KMS protected in this version
