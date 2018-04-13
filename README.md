@@ -30,6 +30,7 @@ All credit goes to Larry Anderson.
 
 # Need to run manually?
 - Go to the lambda console, create an empty test and run it. 
+- ``serverless invoke [local] --function functionName`` also works https://serverless.com/framework/docs/providers/aws/cli-reference/invoke/
 
 # Need PEM ?
 - Go to the lambda console, go to pem add-on, create an empty test and run it.
