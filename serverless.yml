@@ -18,10 +18,10 @@ provider:
   versionFunctions: true
   environment:
     RENEW_BEFORE_EXPIRY: 45
-    S3_ACCOUNT_BUCKET: certificate-api-ccp-settings
-    S3_CERTIFICATE_BUCKET: certificate-api-ccp
+    S3_ACCOUNT_BUCKET: some-settings-bucket
+    S3_CERTIFICATE_BUCKET: some-bucket
     S3_CERTIFICATE_FOLDER: ${self:provider.stage}/store
-    ACME_ACCOUNT_EMAIL: some.email.not.mine
+    ACME_ACCOUNT_EMAIL: someone@email.org
     USE_PRODUCTION: false
 
   iamRoleStatements:
