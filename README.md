@@ -15,6 +15,7 @@ All credit goes to Larry Anderson.
 - change config.js to reflect correct domains
 - npm init
 - serverless deploy
+- add an expiration on the log-group in CloudWatch logs (so you don't get overwhelmed with cost)
 
 # Common errors
 - Error denied: S3 bucket permissions are wrong
