@@ -51,7 +51,7 @@ When using AWS IAM roles an policies correctly, you can give access to resources
 - But how does it work?
 Well, it creates an account at the api (note: account PERRRR api! muy importante!), creates request handshake pattern following DNS-01 specification and posts all of this in a nice little json and stores it to your bucket. And then you have some options. Unfortunately the current nodejs SDK does not support IAM-server-certificate upload... And ACM-certificates, does not allow you to upload multiple certificates at a time, so you are limited with a couple of things.
 
- - 1: Upload it yourself, by downloading the four files and run:
+ - 1: Upload it yourself, by downloading the four files and run (after changing paths and label):
 
 ```
 aws iam upload-server-certificate \
