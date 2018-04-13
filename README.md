@@ -1,6 +1,9 @@
 # node-acme-lambda
 Use AWS Lambda to manage certificates for Let's Encrypt. This fork supports lambda 6.10 only and relies on babel to leverage ES6 features. I use this code outside AWS and some other cloud providers as well, which do not support all CommonJS syntax or full EcmaScript 2015 for that matter. It was adapted to support my particular use-cases. The code is AS-IS.
 
+# More information on how to create Certificates and use ACME / Let's Encrypt to do so (from CLI)
+https://www.dawnbringer.net/blog/890/Ubiquitous%20Encryption:%20Lets%20Encrypt
+
 # Serverless deployment
 
 To make it easy, I rewrote some parts of the code plus added the serverless framework around Larry Anderson's node-acme-lambda.
