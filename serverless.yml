@@ -83,7 +83,10 @@ functions:
     timeout: 300
     reservedConcurrency: 1
     events:
-      - schedule: rate(2 hours)
+      - schedule: 
+          rate: rate(2 hours)
+          name: Certificate Orchestrator ACMEv1
+          description: 'Attempt renewal of certificates every 2 hours'
 
   pem:
     handler: pem-creator.main
