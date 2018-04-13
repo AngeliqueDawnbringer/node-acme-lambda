@@ -29,3 +29,29 @@ All credit goes to Larry Anderson.
 
 # Current version
 This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
+
+# But how does it work?
+Well, it creates an account at the api (note: account PERRRR api! muy importante!), creates request handshake pattern and posts all of this in a nice little json and stores it to your bucket. And then you have some options. Unfortunately the current nodejs SDK does not support IAM-server-certificate upload... And ACM-certificates, does not allow you to upload multiple certificates at a time, so you are limited with a couple of things.
+
+- 1: Upload it yourself, by downloading the four files and run:
+
+```aws iam upload-server-certificate \
+ --server-certificate-name <LABEL> \
+ --certificate-body file:///etc/letsencrypt/live/<DOMAIN>/cert.pem \
+ --private-key file:///etc/letsencrypt/live/<DOMAIN>/privkey.pem \
+ --certificate-chain file:///etc/letsencrypt/live/<DOMAIN>/chain.pem \
+```
+
+(or wherever you might have it)
+
+Or add larrys Scala S3 trigger to your bucket and make it listen to .json
+
+- 2: Upload it to ACM, one certificate at a time in a for loop instead of using a promise.all (guess what v1.1 contains...) Or just create a ACM certificate using DNS01 for the hostname in question, when you want to have it integrated with Amazon Resources or what not.
+
+# Security concerns
+- The private key is not KMS protected in this version
+- The key is only 2048 bit. (This we could increase doing creating of 4096 keys, but the default for v1 was 2048 and since v1 was ACM only, and ACM only supports 2048...)
+- The current config is an inline policy to the lambda
+- The current IAM-role-statements allows for ANY domain within the account to manipulate ANY record.
+
+But, since this lambda is only executed on a 2 hour timer, and the accounts should be either dev or using network load-balancers instead of ALB's etc etc etc, this is not of concern as much and has been left outside the scope of the "v1" project and since the focus is on creating a v2 which supports ACMEv2 (and hence wildcards, which I don't like from a security point of view, but makes adaptability higher...) well you get the point. If you want ACMEv2 and not deal with nifty ECMAscript features in the rest of your project and actually do modular applications etc, please use the orginal version instead of this slightly adapted for MY use-case version.
