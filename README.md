@@ -35,7 +35,8 @@ Well, it creates an account at the api (note: account PERRRR api! muy importante
 
 - 1: Upload it yourself, by downloading the four files and run:
 
-```aws iam upload-server-certificate \
+```
+aws iam upload-server-certificate \
  --server-certificate-name <LABEL> \
  --certificate-body file:///etc/letsencrypt/live/<DOMAIN>/cert.pem \
  --private-key file:///etc/letsencrypt/live/<DOMAIN>/privkey.pem \
