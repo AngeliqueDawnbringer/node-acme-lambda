@@ -29,6 +29,12 @@ All credit goes to Larry Anderson.
 - Go to the lambda console, go to pem add-on, create an empty test and run it.
 - You can also add an event that does this for you. Normally I have a similar function on the s3 bucket which takes event handling.
 
+```
+    events:
+      - schedule: rate(2 hours)
+```
+Name and Description is optional, but I recommend adding it, so you know what it was that created it.
+
 # F.A.Q.
 - Why store the certificate on s3. Isn't that super dangerous?
 
