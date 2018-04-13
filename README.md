@@ -29,6 +29,11 @@ All credit goes to Larry Anderson.
 - Go to the lambda console, go to pem add-on, create an empty test and run it.
 - You can also add an event that does this for you. Normally I have a similar function on the s3 bucket which takes event handling.
 
+# F.A.Q.
+- Why store the certificate on s3. Isn't that super dangerous?
+No in fact it is one of the most safe storing solutions out there, when used correctly! AWS S3 is secure by design and by default. It is mis configuration and explicitely opening up buckets to public which is the cause for all the data leaks out there. We use S3 for durable, highly available storage, to hold the certificate and keys in place and use AWS IAM to manage access using IAM InstanceRoles (not S3API or bucket policies). 
+
+When using AWS IAM roles an policies correctly, you can give access to resources and files - applying least-privilege - on an extremely granular level. You can even do payload-encryption using AWS KMS to protect access to the private key even further.
 
 # Current version
 This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
