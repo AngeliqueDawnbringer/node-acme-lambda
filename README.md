@@ -19,9 +19,14 @@ All credit goes to Larry Anderson.
 
 # Common errors
 - Error denied: S3 bucket permissions are wrong
-- Too many requests: You have hit the rate limiter, just wait for it. It will auto-recover in time
+- Too many requests: You have hit the rate limiter, just wait for it. It will auto-recover in time (e.g. this is what the 2h rate is for)
 - Too many requests: Too many domains? Let's encrypt has a rate limit of a specific amount of requests per minute. This lambda has no concurrency check build in (yet?).
 - No such account: Did you switch from USE_PRODUCTION false to true? Rename registration.json
+- Too many domain requests: There is a 7-day roling 20 cert slider for each domain. e.g. cert1.samedomain.tld, cert2.samedomain.tld 
+- Too many certificate requests: There is a 7-day roling 5 certificate slider for certificate. Use durable storage!
+- Too many pending requests: Did you fuck up your DNS rights/settings? You've hit a 7-day 300 attempts limit. Go make a backup and rtfm
+- These are not valid certificates?!?: Did you switch to USE_PRODUCTION? This should be true after upload and initial playtest.
+- Account Limit: Too many server-certificates - Get your Account & ACM & IAM Certificate limit increased (for each region!)
 
 # Need to run manually?
 - Go to the lambda console, create an empty test and run it. 
@@ -74,6 +79,9 @@ The rights that would enable it look something like this:
       - arn:aws:s3:::${self:provider.environment.S3_CERTIFICATE_BUCKET}/some-underlying-folder/some-cert-name/*
 ```
 This will allow you to only download the pem files of that specific cert and NOTHING else! You can't delete them, you can't modify them. You can only download them. Easy right! Oh, and you don't need to store credentials on the server either! It is all there when using InstanceRoles (or task-roles etc, or lambda-execution-roles. All the same thing, just different underlying systems)
+
+- You said just wait! when dealing with: Too many requests: 
+Are you working in a large environment with tons of other users who also try to download certificates for a particular same dev/prod domain? Try and get the domain whitelisted or limits increased. Let's Encrypt and others do offer this. But normally for just specific accounts. And otherwise, you know what, you can (when working in the same company as me...) Ask me for help, since I do have one of those whitelisted accounts (and no! I do not share credentials or keys with you... You were supposed to implement this ages ago! and renewal is excluded from the limits!).
 
 # Current version
 This version only supports ACMEv1 not ACMEv2. Larry Anderson has implemented a NodeJS 8.10 version that supports ACMEv2. 
